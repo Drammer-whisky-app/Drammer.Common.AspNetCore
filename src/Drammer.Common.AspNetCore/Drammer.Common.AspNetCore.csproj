@@ -6,10 +6,10 @@
         <Nullable>enable</Nullable>
         <LangVersion>Latest</LangVersion>
 
-        <PackageId></PackageId>
-        <Description></Description>
-        <PackageTags></PackageTags>
-        <PackageReleaseNotes>https://github.com/Drammer-whisky-app/TODO/releases</PackageReleaseNotes>
+        <PackageId>Drammer.Common.AspNetCore</PackageId>
+        <Description>Common AspNetCore functionality for the Drammer whisky app.</Description>
+        <PackageTags>aspnetcore drammer</PackageTags>
+        <PackageReleaseNotes>https://github.com/Drammer-whisky-app/Drammer.Common.AspNetCore/releases</PackageReleaseNotes>
         <Authors>Marthijn van den Heuvel,Drammer</Authors>
         <Copyright>Copyright (c) 2024 Drammer whisky app</Copyright>
 
@@ -30,6 +30,10 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
 
     <ItemGroup>
