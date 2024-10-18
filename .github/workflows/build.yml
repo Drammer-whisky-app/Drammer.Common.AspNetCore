@@ -1,0 +1,39 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+      branches:
+      - main
+  pull_request:
+    branches:
+      - '*'
+
+env:
+  DOTNET_NOLOGO: true
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dotnet-version: [ '8.0.x' ]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release
+      - name: Test with dotnet
+        run: dotnet test --configuration Release
+          /p:CollectCoverage=true
+          /p:CoverletOutputFormat="\"cobertura,json\""
+          /p:CoverletOutput=coverage/
+          /p:IncludeTestAssembly=false
