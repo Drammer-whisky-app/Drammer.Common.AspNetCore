@@ -13,19 +13,19 @@ namespace Drammer.Common.AspNetCore.Gravatar;
 /// </summary>
 public sealed class GravatarService : IGravatarService
 {
-    private const string BaseUrl = "https://secure.gravatar.com/avatar/";
+    private const string BaseUrl = "https://gravatar.com/avatar/";
 
     /// <summary>
     /// Creates the Gravatar url
     /// </summary>
-    /// <param name="email"></param>
-    /// <param name="size"></param>
-    /// <param name="rating"></param>
-    /// <param name="defaultImage"></param>
-    /// <param name="customDefaultImageUrl"></param>
-    /// <returns></returns>
+    /// <param name="email">The email address.</param>
+    /// <param name="size">The size.</param>
+    /// <param name="rating">The rating.</param>
+    /// <param name="defaultImage">The default image.</param>
+    /// <param name="customDefaultImageUrl">The custom default image URL.</param>
+    /// <returns>A <see cref="string"/> containing the Gravatar URL.</returns>
     public string Url(
-        string email,
+        string? email,
         int? size = null,
         GravatarRating rating = GravatarRating.Default,
         GravatarDefaultImage defaultImage = GravatarDefaultImage.Identicon,
@@ -35,15 +35,6 @@ public sealed class GravatarService : IGravatarService
         url.Append(GetEmailHash(email));
 
         var isFirst = true;
-
-        void AddParam(string p, string v)
-        {
-            url.Append(isFirst ? '?' : '&');
-            isFirst = false;
-            url.Append(p);
-            url.Append('=');
-            url.Append(v);
-        }
 
         if (size != null)
         {
@@ -71,10 +62,6 @@ public sealed class GravatarService : IGravatarService
                 {
                     AddParam("d", System.Web.HttpUtility.UrlEncode(customDefaultImageUrl));
                 }
-                else
-                {
-                    defaultImage = GravatarDefaultImage.Default;
-                }
             }
             else if (defaultImage == GravatarDefaultImage.Http404)
             {
@@ -99,20 +86,29 @@ public sealed class GravatarService : IGravatarService
         }
 
         return url.ToString();
+
+        void AddParam(string p, string v)
+        {
+            url.Append(isFirst ? '?' : '&');
+            isFirst = false;
+            url.Append(p);
+            url.Append('=');
+            url.Append(v);
+        }
     }
 
     /// <summary>
     /// Creates HTML for an <c>img</c> element that presents a Gravatar icon.
     /// </summary>
-    /// <param name="html">The <see cref="HtmlHelper"/> upon which this extension method is provided.</param>
     /// <param name="email">The email address used to identify the icon.</param>
     /// <param name="size">An optional parameter that specifies the size of the square image in pixels.</param>
     /// <param name="rating">An optional parameter that specifies the safety level of allowed images.</param>
     /// <param name="defaultImage">An optional parameter that controls what image is displayed for email addresses that don't have associated Gravatar icons.</param>
+    /// <param name="customDefaultImageUrl">The custom default image URL.</param>
     /// <param name="htmlAttributes">An optional parameter holding additional attributes to be included on the <c>img</c> element.</param>
-    /// <returns>An HTML string of the <c>img</c> element that presents a Gravatar icon.</returns>
+    /// <returns>An <see cref="HtmlString"/> of the <c>img</c> element that presents a Gravatar icon.</returns>
     public HtmlString HtmlSrc(
-        string email,
+        string? email,
         int? size = null,
         GravatarRating rating = GravatarRating.Default,
         GravatarDefaultImage defaultImage = GravatarDefaultImage.Identicon,
@@ -142,7 +138,7 @@ public sealed class GravatarService : IGravatarService
         email = email.Trim().ToLower();
 
         var emailBytes = Encoding.ASCII.GetBytes(email);
-        var hashBytes = MD5.Create().ComputeHash(emailBytes);
+        var hashBytes = MD5.HashData(emailBytes);
 
         Debug.Assert(hashBytes.Length == 16, "hashBytes.Length == 16");
 

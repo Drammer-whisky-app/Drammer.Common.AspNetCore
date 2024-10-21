@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace Drammer.Common.AspNetCore.Extenstions;
 
+/// <summary>
+/// The uri extensions.
+/// </summary>
 public static class UriExtensions
 {
     /// <summary>
@@ -12,8 +15,8 @@ public static class UriExtensions
     /// <param name="queryStringParameterName">The name of the paging parameter.</param>
     /// <param name="modifier">The modifier, e.g. 1 or -1.</param>
     /// <param name="defaultValue">The default value when the page parameter is not found.</param>
-    /// <param name="includeSchemeAndHost">When true the scheme en host are included in the result.</param>
-    /// <returns>The new url.</returns>
+    /// <param name="includeSchemeAndHost">When true, the scheme and host are included. Otherwise, a relative url is returned.</param>
+    /// <returns>A <see cref="string"/>.</returns>
     public static string AlterPagingQueryParam(
         this Uri uri,
         string queryStringParameterName,
@@ -23,7 +26,7 @@ public static class UriExtensions
     {
         var baseUri = includeSchemeAndHost
                           ? uri.GetComponents(
-                              UriComponents.Scheme | UriComponents.Host | UriComponents.Path,
+                              UriComponents.Scheme | UriComponents.Host | UriComponents.Path | UriComponents.Port,
                               UriFormat.UriEscaped)
                           : uri.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
 
@@ -50,10 +53,10 @@ public static class UriExtensions
         }
         else
         {
-            items = new List<KeyValuePair<string, string>>
-                        {
-                            new(queryStringParameterName, defaultValue.ToString()),
-                        };
+            items =
+            [
+                new KeyValuePair<string, string>(queryStringParameterName, defaultValue.ToString())
+            ];
         }
 
         var queryBuilder = new QueryBuilder(items);
@@ -63,11 +66,11 @@ public static class UriExtensions
     /// <summary>
     /// Replaces the paging query parameter.
     /// </summary>
-    /// <param name="uri"></param>
-    /// <param name="queryStringParameterName"></param>
-    /// <param name="value"></param>
-    /// <param name="includeSchemeAndHost"></param>
-    /// <returns></returns>
+    /// <param name="uri">The URI.</param>
+    /// <param name="queryStringParameterName">The name of the query string parameter.</param>
+    /// <param name="value">The value.</param>
+    /// <param name="includeSchemeAndHost">When true, the scheme and host are included. Otherwise, a relative url is returned.</param>
+    /// <returns>A <see cref="string"/>.</returns>
     public static string ReplacePagingQueryParam(
         this Uri uri,
         string queryStringParameterName,
@@ -76,7 +79,7 @@ public static class UriExtensions
     {
         var baseUri = includeSchemeAndHost
                           ? uri.GetComponents(
-                              UriComponents.Scheme | UriComponents.Host | UriComponents.Path,
+                              UriComponents.Scheme | UriComponents.Host | UriComponents.Path | UriComponents.Port,
                               UriFormat.UriEscaped)
                           : uri.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
 
@@ -93,10 +96,10 @@ public static class UriExtensions
         }
         else
         {
-            items = new List<KeyValuePair<string, string>>
-                        {
-                            new(queryStringParameterName, value.ToString()),
-                        };
+            items =
+            [
+                new KeyValuePair<string, string>(queryStringParameterName, value.ToString())
+            ];
         }
 
         var queryBuilder = new QueryBuilder(items);

@@ -1,5 +1,8 @@
 ﻿namespace Drammer.Common.AspNetCore.Gravatar;
 
+/// <summary>
+/// The default image to use when a Gravatar image is not found.
+/// </summary>
 public enum GravatarDefaultImage
 {
     /// <summary>

@@ -1,5 +1,8 @@
 ﻿namespace Drammer.Common.AspNetCore.Gravatar;
 
+/// <summary>
+/// The rating of the Gravatar image to display.
+/// </summary>
 public enum GravatarRating
 {
     /// <summary>

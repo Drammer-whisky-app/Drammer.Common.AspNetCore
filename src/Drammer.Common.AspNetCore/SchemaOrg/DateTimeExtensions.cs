@@ -1,5 +1,8 @@
 ﻿namespace Drammer.Common.AspNetCore.SchemaOrg;
 
+/// <summary>
+/// The date time extensions.
+/// </summary>
 public static class DateTimeExtensions
 {
     /// <summary>
