@@ -28,4 +28,19 @@
       <ProjectReference Include="..\Drammer.Common.AspNetCore\Drammer.Common.AspNetCore.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="Extensions\EnumResource.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>EnumResource.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Extensions\EnumResource.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>EnumResource.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>

@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -16,25 +18,8 @@ public static class HtmlEditorExtensions
         bool sortAsc = true,
         string notApplicableText = "- N/A -")
     {
-        var list = new List<ExtendedSelectListItem>();
-        var hasIntValues = false;
-        foreach (var obj in Enum.GetValues(enumType))
-        {
-            try
-            {
-                var intVal = (int) obj;
-                list.Add(
-                    new ExtendedSelectListItem
-                        {Text = (obj as Enum)?.ToString(), Value = obj.ToString(), IntValue = intVal});
-                hasIntValues = true;
-            }
-            catch (InvalidCastException)
-            {
-                list.Add(
-                    new ExtendedSelectListItem
-                        {Text = (obj as Enum)?.ToString(), Value = obj.ToString(), IntValue = null});
-            }
-        }
+        var list = CreateOptionList(enumType);
+        var hasIntValues = list.Any(x => x.IntValue.HasValue);
 
         if (orderByDisplayName)
         {
@@ -60,5 +45,40 @@ public static class HtmlEditorExtensions
         }
 
         return h.DropDownListFor(expression, list, htmlAttributes);
+    }
+
+    internal static List<ExtendedSelectListItem> CreateOptionList(Type enumType)
+    {
+        var list = new List<ExtendedSelectListItem>();
+        foreach (var obj in Enum.GetValues(enumType))
+        {
+            var text = (obj as Enum)?.ToString();
+
+            var fieldInfo = enumType.GetField(obj.ToString() ?? string.Empty);
+            if (fieldInfo != null)
+            {
+                var attribute = fieldInfo.GetCustomAttribute<DisplayAttribute>();
+                if (attribute is {Name: not null})
+                {
+                    text = attribute.GetName();
+                }
+            }
+
+            try
+            {
+                var intVal = (int) obj;
+                list.Add(
+                    new ExtendedSelectListItem
+                        {Text = text, Value = obj.ToString(), IntValue = intVal});
+            }
+            catch (InvalidCastException)
+            {
+                list.Add(
+                    new ExtendedSelectListItem
+                        {Text = text, Value = obj.ToString(), IntValue = null});
+            }
+        }
+
+        return list;
     }
 }
