@@ -9,6 +9,10 @@ on:
     branches:
       - '*'
 
+permissions:
+  contents: read
+  actions: read
+
 env:
   DOTNET_NOLOGO: true
 
