@@ -11,9 +11,6 @@ updates:
       interval: "weekly"
     allow:
       - dependency-name: "*"
-    ignore:
-      - dependency-name: "FluentAssertions"
-        versions: [ ">=8.0.0" ]
     groups:
       microsoft:
         patterns:
