@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{
 		.github\dependabot.yml = .github\dependabot.yml
 		.github\workflows\build.yml = .github\workflows\build.yml
 		.github\workflows\release.yml = .github\workflows\release.yml
+		.github\workflows\dependabot-autoapprove.yml = .github\workflows\dependabot-autoapprove.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drammer.Common.AspNetCore.Tests", "src\Drammer.Common.AspNetCore.Tests\Drammer.Common.AspNetCore.Tests.csproj", "{1E0F6793-BF28-417D-8799-8A8F8D57758C}"
