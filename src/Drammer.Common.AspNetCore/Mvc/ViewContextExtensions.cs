@@ -17,7 +17,7 @@ public static class ViewContextExtensions
         var query = viewContext.HttpContext.Request.Query;
         return query.ToDictionary(
             x => x.Key,
-            x => x.Value.Count > 0 ? x.Value[^1]?.ToString() ?? string.Empty : string.Empty,
+            x => x.Value.Count > 0 ? x.Value[0]?.ToString() ?? string.Empty : string.Empty,
             StringComparer.OrdinalIgnoreCase);
     }
 

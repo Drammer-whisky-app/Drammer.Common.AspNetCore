@@ -59,7 +59,7 @@ public sealed class ViewContextExtensionsTests
         result.Should().NotBeNull();
         result.Should().BeEquivalentTo(new Dictionary<string, string>
         {
-            { "key1", "value2" },
+            { "key1", "value1" },
         });
     }
 
