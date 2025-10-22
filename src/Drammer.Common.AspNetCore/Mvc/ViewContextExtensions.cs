@@ -15,7 +15,10 @@ public static class ViewContextExtensions
     public static Dictionary<string, string> GetAllQueryParameters(this ViewContext viewContext)
     {
         var query = viewContext.HttpContext.Request.Query;
-        return query.ToDictionary(x => x.Key, x => x.Value.ToString());
+        return query.ToDictionary(
+            x => x.Key,
+            x => x.Value.Count > 0 ? x.Value[^1]?.ToString() ?? string.Empty : string.Empty,
+            StringComparer.OrdinalIgnoreCase);
     }
 
     /// <summary>
