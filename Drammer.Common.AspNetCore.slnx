@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path=".gitignore" />
+    <File Path="icon.png" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="SECURITY.md" />
+  </Folder>
+  <Folder Name="/Src/">
+    <Project Path="src/Drammer.Common.AspNetCore/Drammer.Common.AspNetCore.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="src/Drammer.Common.AspNetCore.Tests/Drammer.Common.AspNetCore.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Workflows/">
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/dependabot-autoapprove.yml" />
+    <File Path=".github/workflows/release.yml" />
+  </Folder>
+</Solution>
